@@ -11,19 +11,27 @@
 ></script>
 
 <body>
+  <!-- 상단 바를 위한 새로운 컨테이너 -->
   <div
-    id="playTime"
+    id="topBar"
     style="
+      display: flex;
+      justify-content: space-around; /* 항목들 사이에 공간을 균등하게 분배 */
+      align-items: center;
       position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 0;
+      left: 0;
+      width: 100%;
       color: white;
       font-size: 1.5em;
+      background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 설정 */
     "
   >
-    Time: 0ms
+    <div id="playTime">Time: 0ms</div>
+    <div id="score">Score: 0</div>
+    <div id="stageDisplay">Stage: 0</div>
   </div>
+
   <div
     id="gameOver"
     style="
@@ -62,34 +70,6 @@
     <button id="restartButtonClear" style="font-size: 1em; margin-top: 20px">
       Restart?
     </button>
-  </div>
-
-  <div
-    id="stageDisplay"
-    style="
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 1.5em;
-    "
-  >
-    Stage: 0
-  </div>
-
-  <div
-    id="score"
-    style="
-      position: absolute;
-      top: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 1.5em;
-    "
-  >
-    Score: 0
   </div>
 </body>
 
