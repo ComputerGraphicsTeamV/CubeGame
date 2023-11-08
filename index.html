@@ -77,6 +77,20 @@
   >
     Stage: 0
   </div>
+
+  <div
+    id="score"
+    style="
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 1.5em;
+    "
+  >
+    Score: 0
+  </div>
 </body>
 
 <script type="importmap">
@@ -404,6 +418,14 @@
     }
   }
 
+  // 점수를 추적하는 변수
+  let score = 0;
+
+  // 점수를 화면에 표시하는 함수 추가.
+  function updateScore() {
+    document.getElementById("score").textContent = `Score: ${score}`;
+  }
+
   function animate() {
     animationId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
@@ -456,6 +478,24 @@
         break;
       }
     }
+
+    // 적이 공룡을 지나가면 점수를 증가.
+    enemies.forEach((enemy, index) => {
+      // 선인장이 공룡을 지나가고, 화면에서 완전히 사라졌는지 확인.
+      if (enemy.box.position.z > cube.position.z && !enemy.passed) {
+        enemy.passed = true; // 이 선인장이 점수를 주었다는 것을 표시.
+        score++; // 점수를 증가.
+        updateScore(); // 화면에 점수를 업데이트.
+      }
+
+      // 선인장이 화면에서 완전히 사라지면 삭제.
+      if (enemy.box.position.z > camera.position.z) {
+        // 씬에서 선인장 모델을 제거.
+        scene.remove(enemy.model);
+        // 배열에서 선인장 데이터를 제거.
+        enemies.splice(index, 1);
+      }
+    });
 
     // 게임 오버 조건 검사
     if (enemyCollision) {
