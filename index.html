@@ -5,20 +5,28 @@
   }
 </style>
 
-<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+<script
+  async
+  src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"
+></script>
 
 <body>
-  <div id="playTime" style="
+  <div
+    id="playTime"
+    style="
       position: absolute;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       color: white;
       font-size: 1.5em;
-    ">
+    "
+  >
     Time: 0ms
   </div>
-  <div id="gameOver" style="
+  <div
+    id="gameOver"
+    style="
       display: none;
       position: absolute;
       top: 50%;
@@ -27,7 +35,8 @@
       color: white;
       font-size: 2em;
       text-align: center;
-    ">
+    "
+  >
     Game Over
     <br />
     <button id="restartButton" style="font-size: 1em; margin-top: 20px">
@@ -35,7 +44,9 @@
     </button>
   </div>
 
-  <div id="gameClear" style="
+  <div
+    id="gameClear"
+    style="
       display: none;
       position: absolute;
       top: 20%;
@@ -44,7 +55,8 @@
       color: white;
       font-size: 2em;
       text-align: center;
-    ">
+    "
+  >
     Congratulation! You cleared every stage!
     <br />
     <button id="restartButtonClear" style="font-size: 1em; margin-top: 20px">
@@ -52,14 +64,17 @@
     </button>
   </div>
 
-  <div id="stageDisplay" style="
+  <div
+    id="stageDisplay"
+    style="
       position: absolute;
       top: 50px;
       left: 50%;
       transform: translateX(-50%);
       color: white;
       font-size: 1.5em;
-    ">
+    "
+  >
     Stage: 0
   </div>
 </body>
@@ -76,7 +91,7 @@
 <script type="module">
   import * as THREE from "three";
   import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -207,20 +222,17 @@
   cube.castShadow = true;
   scene.add(cube);
 
-
-
   //모델 로딩
   const loader2 = new GLTFLoader();
   let dinoModel;
 
-  loader2.load('./res/scene.gltf', (gltf) => {//공룡
+  loader2.load("./res/sceneMe.gltf", (gltf) => {
+    //공룡
     dinoModel = gltf.scene;
     dinoModel.scale.set(0.3, 0.3, 0.3);
     dinoModel.position.set(1, 1, 4);
-    dinoModel.rotation.y += 1.2;//roatae dinosaur
+    dinoModel.rotation.y += 1.2; //roatae dinosaur
     dinoModel.castShadow = true;
-
-    
 
     // 초록색큐브는 안보이게 설정(hitbox)
     scene.remove(cube);
@@ -233,18 +245,14 @@
   const cosModels = [];
   let enemies = [];
 
-  loader.load('./res_2/scene.gltf', (gltf) => { // 선인장 모델 파일 경로
+  loader.load("./res/sceneEnemy.gltf", (gltf) => {
+    // 선인장 모델 파일 경로
     const cosModel = gltf.scene;
     cosModel.scale.set(1.0, 0.8, 1.0);
     cosModel.castShadow = true;
-   
 
     cosModels.push(cosModel);
-
   });
-
-
-
 
   const ground = new Box({
     width: 12,
@@ -328,7 +336,6 @@
     }
   });
 
-
   let frames = 0;
   let spawnRate = 200;
   let animationId;
@@ -352,7 +359,7 @@
     ).textContent = `Time: ${elapsedTime.toFixed(2)}s`;
     if (gameCleared) {
       // 게임 클리어 후 게임 오버 메시지가 표시되지 않도록 수정
-      cancelAnimationFrame(animationId); // 게임 애니메이션 루프를 중지합니다.
+      cancelAnimationFrame(animationId); // 게임 애니메이션 루프를 중지.
 
       return;
     }
@@ -439,8 +446,6 @@
         enemyCollision = true;
         break;
       }
-
-
     }
 
     // 게임 오버 조건 검사
@@ -461,28 +466,33 @@
 
       const speedIncrease = 0.0003 * Math.pow(2, currentStage); // 현재 스테이지에 따른 속도 증가값
 
-
-      const enemyBox = new Box({//히트박스 아직 위치 조정 안끝남
+      const enemyBox = new Box({
+        //히트박스 아직 위치 조정 안끝남
         width: 1,
         height: 2,
         depth: 1,
         position: {
           x: (Math.random() - 0.5) * 10,
           y: 0,
-          z: -20
+          z: -20,
         },
         velocity: {
           x: 0,
           y: 0,
-          z: 0.005
+          z: 0.005,
         },
-        color: 'red',
+        color: "red",
         zAcceleration: true,
         speedIncrease: speedIncrease,
       });
       //복제선인장 구현
-      const clonedCosModel = cosModels[Math.floor(Math.random() * cosModels.length)].clone();
-      clonedCosModel.position.set(enemyBox.position.x, enemyBox.position.y, enemyBox.position.z);
+      const clonedCosModel =
+        cosModels[Math.floor(Math.random() * cosModels.length)].clone();
+      clonedCosModel.position.set(
+        enemyBox.position.x,
+        enemyBox.position.y,
+        enemyBox.position.z
+      );
       clonedCosModel.visible = true;
       clonedCosModel.castShadow = true;
 
@@ -490,16 +500,10 @@
       scene.remove(enemyBox);
       scene.add(clonedCosModel);
 
-
       enemies.push({ model: clonedCosModel, box: enemyBox });
     }
 
-
     frames++;
-
-
-
-
   }
 
   animate();
