@@ -231,13 +231,19 @@
     dinoModel = gltf.scene;
     dinoModel.scale.set(0.3, 0.3, 0.3);
     dinoModel.position.set(1, 1, 4);
-    dinoModel.rotation.y += 1.2; //roatae dinosaur
-    dinoModel.castShadow = true;
+    dinoModel.rotation.y += 1.2; // rotate dinosaur
 
-    // 초록색큐브는 안보이게 설정(hitbox)
+    // 공룡 모델의 모든 메쉬에 대해 그림자 생성 설정
+    dinoModel.traverse((node) => {
+      if (node.isMesh) {
+        node.castShadow = true;
+      }
+    });
+
+    // 초록색 큐브는 안보이게 설정(hitbox)
     scene.remove(cube);
 
-    // 스킨적용
+    // 스킨 적용
     scene.add(dinoModel);
   });
 
@@ -249,8 +255,11 @@
     // 선인장 모델 파일 경로
     const cosModel = gltf.scene;
     cosModel.scale.set(1.0, 0.8, 1.0);
-    cosModel.castShadow = true;
-
+    cosModel.traverse(function (node) {
+      if (node.isMesh) {
+        node.castShadow = true; // 그림자 캐스팅 활성화
+      }
+    });
     cosModels.push(cosModel);
   });
 
